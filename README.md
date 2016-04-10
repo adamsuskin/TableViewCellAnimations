@@ -15,7 +15,8 @@ Then, like any other table view, make sure that the kind of table view cell in t
 ![storyboard class setting](http://www.adamsuskin.com/wp-content/uploads/2015/11/Screen-Shot-2015-11-22-at-2.40.02-PM.png)
 
 Wherever you choose to have the table view's `delegate`, make sure your implementation of cellForRowAtIndexPath: uses `ASTableViewCell`:
-
+    
+    // Objective-C
     -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
         ASTableViewCell *cell = (ASTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CellIdentifier"];
@@ -23,11 +24,27 @@ Wherever you choose to have the table view's `delegate`, make sure your implemen
         [cell setDuration:0.25]; //set the duration of the entrance animation
         [cell addAnimation:kASTableViewCellAnimationFadeIn];
     }
+    
+    // Swift
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
+        let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath) as! ASTableViewCell
+        
+        cell.addAnimation(ASTableViewCellAnimation.SlideFromLeft)
+        cell.duration = 0.4
+    }
 
 Make sure to actually call `animate` in your willDisplayCell:
-
+    
+    // Objective-C
     -(void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
         [(ASTableViewCell *)cell animate];
+    }
+    
+    // Swift
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = cell as! ASTableViewCell
+        cell.animate()
     }
 
 ## Animations
